@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+    <name>Open Source Indicators</name>
+    <author>David Toro Triana</author>
+    <authorEmail>dtorot@opensai.org</authorEmail>
+    <authorUrl>https://opensai.org</authorUrl>
+    <creationDate>August 2026</creationDate>
+    <copyright>Copyright (C) 2026 Open Source Academic Initiative (OpenSAI). All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see LICENSE</license>
+    <version>1.0.0</version>
+    <description>A live "OSS ticker": a scrolling row of open-source ecosystem indicators (GitHub stars/tags, npm downloads, HuggingFace, CVEs, Mastodon…), fetched client-side and cached in the browser. Fully configurable.</description>
+
+    <namespace path="src">OpenSAI\OssIndicators</namespace>
+
+    <files>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <media destination="mod_oss_indicators" folder="media/mod_oss_indicators">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic" label="Presentation">
+                <field name="title" type="text" default="Ecosistema Global Open Source"
+                    label="Ticker title" description="Small heading shown above the ticker." />
+                <field name="loading_text" type="text" default="Sincronizando pulso global..."
+                    label="Loading text" description="Shown while the first data loads." />
+                <field name="nodata_text" type="text" default="No hay datos disponibles"
+                    label="No-data text" description="Shown if no indicator could be fetched." />
+                <field name="tooltip_title" type="text" default="¿Por qué importa?"
+                    label="Tooltip heading" description="Bold heading inside each hover tooltip." />
+                <field name="scroll_seconds" type="number" default="130" min="10"
+                    label="Scroll duration (s)" description="Seconds for one full scroll cycle (higher = slower)." />
+                <field name="fetch_count" type="number" default="10" min="1" max="49"
+                    label="Indicators fetched" description="How many random indicators to fetch per refresh." />
+                <field name="show_count" type="number" default="7" min="1" max="20"
+                    label="Indicators shown" description="How many to display in the scrolling row." />
+                <field name="cache_hours" type="number" default="24" min="1"
+                    label="Cache (hours)" description="How long the browser caches fetched data before refetching." />
+            </fieldset>
+
+            <fieldset name="colors" label="Theme colors">
+                <field name="color_bg" type="color" default="" label="Background" description="Overrides --ticker-bg (leave empty for the built-in dark/light theme)." />
+                <field name="color_text" type="color" default="" label="Text" />
+                <field name="color_label" type="color" default="" label="Label / muted" />
+                <field name="color_border" type="color" default="" label="Borders" />
+                <field name="color_green" type="color" default="" label="Positive" />
+                <field name="color_red" type="color" default="" label="Negative" />
+                <field name="color_blue" type="color" default="" label="Neutral" />
+                <field name="color_tooltip" type="color" default="" label="Tooltip background" />
+            </fieldset>
+
+            <fieldset name="data" label="Indicators">
+                <field name="indicators" type="textarea" rows="10" default=""
+                    label="Indicators (JSON)"
+                    description="Leave EMPTY to use the built-in 49 indicators. Otherwise paste a JSON array. Each item: {label, icon, relevance, type, arg, value, change, tone, url}. Supported type: gh_stars, gh_tag, npm_week, gh_search, gh_advisory, hf_top, mastodon, static." />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
